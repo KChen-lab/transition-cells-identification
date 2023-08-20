@@ -90,4 +90,4 @@ for(i in data$seurat_clusters %>% unique()){
 }
 res<-Reduce(function(x,y) rbind(data.frame('transition_index'=x),data.frame('transition_index'=y)), res)
 data<-AddMetaData(data,res)
-saveRDS(res,'data_with_transition_index.rds')
+saveRDS(data,'data_with_transition_index.rds')
