@@ -7,6 +7,6 @@ Step 2: Selecting cells for Pearson’s correlation coefficients calculation <br
 Step 3: Top most variable genes selection <br />
 Step 4: Transition index calculation <br />
 
-![workflow](https://github.com/ywang65/transition-cell-identification/blob/main/images/workflow.png)
+![workflow](https://github.com/KChen-lab/transition-cells-identification/blob/main/images/workflow.png)
 
 For more informations and mathematical details please refer to our manuscript
