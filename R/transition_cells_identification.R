@@ -82,12 +82,14 @@ for(i in data$seurat_clusters %>% unique()){
         cell<-data_sub@meta.data %>% filter(pearson>quantile(data_sub$pearson,0.8,na.rm=T)) %>% rownames()
         hvg<-sort(apply(as.matrix(GetAssayData(data_sub[,cell])),1,function(x) var(x)),decreasing=T)[1:100] %>% names
         pearson<-gene_pearson(data_sub,n_neighbor=n_neighbors,highly_variable_gene=hvg)
-        # calculating transition index based on gene pair-wise Pearson's correlation coefficients
-        res_1<-apply(pearson,1,function(x) ks.test(x,pearson[1,],alternative='greater')$statistic)
-        res_2<-apply(pearson,1,function(x) ks.test(x,pearson[1,],alternative='less')$statistic)
-        res_tmp<-find_ks_d(pearson[which.max(res_1),],pearson[which.max(res_2),])
-        res[[as.character(i)]]<-apply(pearson,1,function(x) sum(abs(x)>min(unlist(res_tmp)) & abs(x)<max(unlist(res_tmp)),na.rm=T)/sum(abs(x)>=0,na.rm=T))
+        res[[as.character(i)]]<-pearson
 }
-res<-Reduce(function(x,y) rbind(data.frame('transition_index'=x),data.frame('transition_index'=y)), res)
-data<-AddMetaData(data,res)
+# calculating transition index based on gene pair-wise Pearson's correlation coefficients
+res<-Reduce(function(x,y) rbind(x,y),res)
+res<-abs(res)
+res_1<-apply(res,1,function(x) ks.test(x,res[1,],alternative='greater')$statistic)
+res_2<-apply(res,1,function(x) ks.test(x,res[1,],alternative='less')$statistic)
+res_tmp<-find_ks_d(res[which.max(res_1),],res[which.max(res_2),])
+tmp<-apply(res,1,function(x) sum(abs(x)>min(unlist(res_tmp)) & abs(x)<max(unlist(res_tmp)),na.rm=T)/sum(abs(x)>=0,na.rm=T))
+data<-AddMetaData(data,data.frame('transition_index'=tmp))
 saveRDS(data,'data_with_transition_index.rds')
