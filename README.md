@@ -20,3 +20,5 @@ To load the installed package in R:
 ```
 library(Transitions)
 ```
+# Usage
+[Here]([https://github.com/KChen-lab/transition-cells-identification/blob/main/example/identify_transition_cells_using_simulation_data.ipynb]) is an example about how to apply our methond in scRNA-seq data. The data used in the example is simulated by SERGIO with true stable and transition labels and can be found in the [data/]([https://github.com/KChen-lab/transition-cells-identification/tree/main/data]) folder.
