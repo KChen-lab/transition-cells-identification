@@ -1,6 +1,6 @@
 #' Calculate GPPCCs
 #'
-#' This is the function calculating gene pair-wise Pearson's correlation coefficient (GPPCCs). 
+#' This is the function calculating gene pair-wise Pearson's correlation coefficients (GPPCCs). 
 #' The GPPCCs calculated using our method are assumed from the cells that exhibit similar 
 #' regulatory profiles and around equilibrium points. Thus, for each cell, we select the cell 
 #' together with its nearest neighbors in Principal Component Analysis (PCA) dimensions based 
@@ -58,7 +58,7 @@ find_ks_d<-function(x,y){
 #' This is the function calculating transition index that reflects the transition
 #' probability of a cell. The transition index we defined is inspired by Kolmogorov-Smirnov 
 #' statistic. We assume there are both transition cells and stable cells captured by  
-#' scRNA-seq in a developmental process. We first find the archetype of transition 
+#' scRNA-seq in the data. We first find the archetype of transition 
 #' cell and stable cell by using modified Kolmogorov-Smirnov statistic. As proved 
 #' mathematically, there are more gene pairs whose absolute value of Pearson’s 
 #' correlation coefficients are close to 1 in transition cells than stable cells. 
