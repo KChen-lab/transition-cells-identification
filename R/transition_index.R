@@ -79,7 +79,10 @@ find_ks_d<-function(x,y){
 #' @param n_neighbor The number of neighboring cells used to calculate GPPCCs. 300 by default.
 #' @param n_gene The number of top most variable genes used in calculating GPPCCs. 50 by default.
 #' @param return_pearson Whether report GPPCCs or not. Using False by default.
-#' @return A Seurat object. Calculated transition index is store as a column in the metadata.
+#' @return If return_pearson is False, return a Seurat object. Calculated transition index is 
+#' store as a column in the metadata. If return_pearson is True, return a list. Calculated 
+#' transition index is stored in the data element, as a column in the metadata. GPPCCs is stored
+#' in the GPPCCs element.
 #' @import Seurat
 #' @import scLink
 #' @import dplyr
