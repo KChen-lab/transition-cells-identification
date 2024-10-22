@@ -78,12 +78,13 @@ find_ks_d<-function(x,y){
 #' 'seurat_clusters' by default. 
 #' @param n_neighbor The number of neighboring cells used to calculate GPPCCs. 300 by default.
 #' @param n_gene The number of top most variable genes used in calculating GPPCCs. 50 by default.
+#' @param return_pearson Whether report GPPCCs or not. Using False by default.
 #' @return A Seurat object. Calculated transition index is store as a column in the metadata.
 #' @import Seurat
 #' @import scLink
 #' @import dplyr
 #' @export
-transition_index<-function(data,highly_variable_gene=NULL,group='seurat_clusters',n_neighbors=300,n_gene=50,...){
+transition_index<-function(data,highly_variable_gene=NULL,group='seurat_clusters',n_neighbors=300,n_gene=50,return_pearson=FALSE,...){
     res<-list()
     for(i in data@meta.data[,group] %>% unique()){
             print(i)
@@ -112,13 +113,17 @@ transition_index<-function(data,highly_variable_gene=NULL,group='seurat_clusters
             res[[as.character(i)]]<-pearson
     }
     res<-Reduce(function(x,y) rbind(x,y),res)
+    pearson<-res
     res<-abs(res)
     res_1<-apply(res,1,function(x) ks.test(x,res[1,],alternative='greater')$statistic)
     res_2<-apply(res,1,function(x) ks.test(x,res[1,],alternative='less')$statistic)
     res_tmp<-find_ks_d(res[which.max(res_1),],res[which.max(res_2),])
     tmp<-apply(res,1,function(x) sum(abs(x)>min(unlist(res_tmp)) & abs(x)<max(unlist(res_tmp)),na.rm=T)/sum(abs(x)>=0,na.rm=T))
     data<-Seurat::AddMetaData(data,data.frame('transition_index'=tmp))
+    if(!return_pearson)
     return(data)
+    else
+    return(list('GPPCCs'=pearson,'data'=data))
 }
 
 
