@@ -10,6 +10,7 @@ transition_index(
   group = "seurat_clusters",
   n_neighbors = 300,
   n_gene = 50,
+  return_pearson=FALSE,
   ...
 )
 }
@@ -27,9 +28,13 @@ name of data@meta.data, such as 'seurat_clusters','cell_type','time_point'. Usin
 \item{n_gene}{The number of top most variable genes used in calculating GPPCCs. 50 by default.}
 
 \item{n_neighbor}{The number of neighboring cells used to calculate GPPCCs. 300 by default.}
+\item{return_pearson}{Whether report GPPCCs or not. Using False by default.}
 }
 \value{
-A Seurat object. Calculated transition index is store as a column in the metadata.
+If return_pearson is False, return a Seurat object. Calculated transition index is 
+store as a column in the metadata. If return_pearson is True, return a list. Calculated 
+transition index is stored in the data element, as a column in the metadata. GPPCCs is stored
+in the GPPCCs element.
 }
 \description{
 This is the function calculating transition index that reflects the transition
