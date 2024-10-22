@@ -22,3 +22,12 @@ library(Transitions)
 ```
 # Usage
 [Here](https://github.com/KChen-lab/transition-cells-identification/blob/main/example/identify_transition_cells_using_simulation_data.ipynb) is an example about how to apply our method in scRNA-seq data. The data used in the example is simulated by SERGIO with true stable and transition labels and can be found in the [data/](https://github.com/KChen-lab/transition-cells-identification/tree/main/data) folder.
+## Inputs
+```data```: A Seurat object containing both normalized count matrix and metadata such as neighboring results for a single-cell dataset.<br/>
+```highly_variable_gene```: A gene list containing top most variable genes. Calculated by ```var``` function by default. Can be set manually if particular genes need to be included or excluded. E.g. cell cycle-related genes can be excluded if focusing on non-cell cycle transitions.<br/>
+```group```: The cell group highly_variable_genes selected based on. To capture different expression patterns in different potential stable states, we calculate GPPCCs using group specific top most variable genes. The group should be a column name of `data@meta.data`, such as 'seurat_clusters','cell_type','time_point'. Using 'seurat_clusters' by default. <br/>
+```n_neighbor```: The number of neighboring cells used to calculate GPPCCs. This number choice is empirically determined from the data, to achieve a good tradeoff between temporal resolution and estimation accuracy. Usually 200~300 neighbors achieve a good performance. Using 300 by default.<br/>
+```n_gene```: The number of top most variable genes used in calculating GPPCCs. Using 50 by default.<br/>
+```return_pearson```: Whether report GPPCCs or not. Using False by default.<br/>
+## Multiple datasets comparison
+The transition index calculated using this method reflects the relative likelihood of a cell to be a transition cell. We assume there are both transition cells and stable cells in the dataset. We first find the archetype of a transition cell and a stable cell, and calculate the transition indices for all other cells based on these two archetypal cells. When comparing cell transition indices from multiple datasets, users can either first combine cells together and then calculate transition indices (recommended) or include the same archetypal stable and transition cells for all the datasets.      
