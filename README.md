@@ -9,7 +9,7 @@ Our method models gene expressions using stochastic differential equations (SDEs
 
 Through characterizing cellular state transitions, we can identify genes potentially useful for diagnosis, prognosis and therapeutics.
 
-For more informations and mathematical details please refer to our manuscript
+For more informations and mathematical details please refer to our [manuscript](https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(24)00303-5).
 
 # Installation
 To install the developmental version from GitHub:
